@@ -4,6 +4,57 @@ import './style.css'
 // import all of the assets from three.js
 import * as THREE from 'three';
 
+import * as dat from "dat.gui"
+
+
+// NOTE creating a new slider for dat gui with a name of width and start value of 10
+const gui = new dat.GUI()
+const world = {
+  plane: {
+    width: 5, // ^^ note is refering to this line
+    height: 5,
+    widthSegments: 5,
+    heightSegments: 5
+  }
+}
+
+// NOTE adding the slider's min and max values
+gui.add(world.plane, "width", 1, 20).onChange(generatePlane)
+
+// NOTE adding the slider's min and max values
+gui.add(world.plane, "height", 1, 20).onChange(generatePlane)
+
+// NOTE adding the slider's min and max values
+gui.add(world.plane, "widthSegments", 1, 20).onChange(generatePlane)
+
+// NOTE adding the slider's min and max values
+gui.add(world.plane, "heightSegments", 1, 20).onChange(generatePlane)
+
+function generatePlane() {
+
+    // removing old geometry
+    planeMesh.geometry.dispose()
+    // adding new geometry value
+    planeMesh.geometry = new THREE.PlaneGeometry(world.plane.width, world.plane.height, world.plane.heightSegments, world.plane.heightSegments)
+  
+    
+  // we got this from the console
+  var vertArray = planeMesh.geometry.attributes.position.array
+  
+    // NOTE loop for rigidness
+  
+  for (let i = 0; i < vertArray.length; i+= 3) {
+    var x = vertArray[i]
+    var y = vertArray[i + 1]
+    var z = vertArray[i + 2]
+  
+    vertArray[i + 2] = z + Math.random()
+  
+  }
+}
+
+
+
 // ANCHOR ------------- Main Setup - scene, camera, renderer ----------------------
 
 // scene creation
@@ -47,9 +98,9 @@ const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial)
 
 scene.add(planeMesh)
 
+
 // we got this from the console
 const vertArray = planeMesh.geometry.attributes.position.array
-
 
 // NOTE loop for rigidness
 
