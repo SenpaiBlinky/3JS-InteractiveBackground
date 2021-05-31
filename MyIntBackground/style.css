@@ -1,0 +1,4 @@
+/* removing the margin from the body */
+body {
+  margin: 0;
+}
