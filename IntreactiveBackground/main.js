@@ -132,7 +132,8 @@ scene.add(planeMesh)
 const colors = []
 
 for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
-  colors.push(0,.19,.4)
+  // NOTE colors of main plane
+  colors.push(0.43921568627,0.2,0.67843137254)
 }
 
 
@@ -227,15 +228,19 @@ if (intersects.length > 0) {
   intersects[0].object.geometry.attributes.color.needsUpdate = true
 
   const initialColor = {
-   r: 0,
-   g: .19,
-   b: .4
+   r: 0.43921568627,
+   g: .2,
+   b: 0.67843137254
   }
 
   const hoverColor = {
     r: 0.1,
     g: 0.5,
     b: 1
+    
+    // NOTE r: 0.1, OLD COLORS
+    // g: 0.5,
+    // b: 1
   }
   gsap.to(hoverColor, {
     r: initialColor.r,
