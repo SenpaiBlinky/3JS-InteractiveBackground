@@ -20,24 +20,24 @@ import { OrbitControls } from "https://unpkg.com/three@0.126.1/examples/jsm/cont
 const gui = new dat.GUI()
 const world = {
   plane: {
-    width: 5, // ^^ note is refering to this line
-    height: 5,
-    widthSegments: 5,
-    heightSegments: 5
+    width: 50, // ^^ note is refering to this line
+    height: 50,
+    widthSegments: 100,
+    heightSegments: 100
   }
 }
 
 // NOTE adding the slider's min and max values
-gui.add(world.plane, "width", 1, 20).onChange(generatePlane)
+gui.add(world.plane, "width", 5, 100).onChange(generatePlane)
 
 // NOTE adding the slider's min and max values
-gui.add(world.plane, "height", 1, 20).onChange(generatePlane)
+gui.add(world.plane, "height", 5, 100).onChange(generatePlane)
 
 // NOTE adding the slider's min and max values
-gui.add(world.plane, "widthSegments", 1, 20).onChange(generatePlane)
+gui.add(world.plane, "widthSegments", 1, 200).onChange(generatePlane)
 
 // NOTE adding the slider's min and max values
-gui.add(world.plane, "heightSegments", 1, 20).onChange(generatePlane)
+gui.add(world.plane, "heightSegments", 1, 200).onChange(generatePlane)
 
 function generatePlane() {
 
@@ -133,7 +133,7 @@ const colors = []
 
 for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
   // NOTE colors of main plane
-  colors.push(0.43921568627,0.2,0.67843137254)
+  colors.push(0,0.19,.4)
 }
 
 
@@ -206,42 +206,45 @@ renderer.render(scene, camera)
 
 raycaster.setFromCamera(mouse, camera)
 const intersects = raycaster.intersectObject(planeMesh)
+
+
+const initialColor = { // NOTE color of the change effect
+  r: 0,
+  b: 0.4,
+  g: 0.19
+
+  // r: 0.93921568627, NOTE pink
+  // g: .2,
+  // b: 0.67843137254
+ }
+
+ const hoverColor = { //NOTE color of the light
+   r: 0.93921568627,
+   g: 0.2,
+   b: 0.67843137254
+ }
+
 if (intersects.length > 0) {
 
   const { color } = intersects[0].object.geometry.attributes
 
   // NOTE vert 1
-  color.setX(intersects[0].face.a ,0.1)
-  color.setY(intersects[0].face.a ,0.5)
-  color.setZ(intersects[0].face.a ,1)
+  color.setX(intersects[0].face.a ,hoverColor)
+  color.setY(intersects[0].face.a ,hoverColor)
+  color.setZ(intersects[0].face.a ,hoverColor)
 
   // NOTE vert 2
-  color.setX(intersects[0].face.b ,0.1)
-  color.setY(intersects[0].face.b ,0.5)
-  color.setZ(intersects[0].face.b ,1)
+  color.setX(intersects[0].face.b ,hoverColor)
+  color.setY(intersects[0].face.b ,hoverColor)
+  color.setZ(intersects[0].face.b ,hoverColor)
 
   //NOTE vert 3
-  color.setX(intersects[0].face.c ,0.1)
-  color.setY(intersects[0].face.c ,0.5)
-  color.setZ(intersects[0].face.c ,1)
+  color.setX(intersects[0].face.c ,hoverColor)
+  color.setY(intersects[0].face.c ,hoverColor)
+  color.setZ(intersects[0].face.c ,hoverColor)
 
   intersects[0].object.geometry.attributes.color.needsUpdate = true
 
-  const initialColor = {
-   r: 0.43921568627,
-   g: .2,
-   b: 0.67843137254
-  }
-
-  const hoverColor = {
-    r: 0.1,
-    g: 0.5,
-    b: 1
-    
-    // NOTE r: 0.1, OLD COLORS
-    // g: 0.5,
-    // b: 1
-  }
   gsap.to(hoverColor, {
     r: initialColor.r,
     g: initialColor.g,
