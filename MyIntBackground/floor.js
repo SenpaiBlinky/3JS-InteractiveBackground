@@ -4,15 +4,13 @@ import './style.css'
 // import gsap for animations
 import gsap from "gsap"
 
-// import * as THREE from './node_modules/three/src/Three.js';
-
 // import all of the assets from three.js
 import * as THREE from 'three';
 
 import * as dat from "dat.gui"
 
-
-
+// NOTE control orbit
+import { OrbitControls } from "https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js"
 
 
 
@@ -59,7 +57,6 @@ const visibleWidthAtZDepth = ( depth, camera ) => {
   const height = visibleHeightAtZDepth( depth, camera );
   return height * camera.aspect;
 };
-
 
 // console.log(visibleHeightAtZDepth(true, camera))
 // console.log(visibleWidthAtZDepth(true, camera))
@@ -118,6 +115,7 @@ function generatePlane() {
 
 for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
   colors.push(0,.19,.4)
+  // colors.push(0,.0,.0) // NOTE black
 }
 
 planeMesh.geometry.setAttribute("color", new THREE.BufferAttribute(new Float32Array(colors), 3))
@@ -145,36 +143,11 @@ const raycaster = new THREE.Raycaster()
 // scene.add(mesh)
 
 
-// ANCHOR -------------------------------- ADDING THE SCENE -----------------------------
-//------------------------------------------------------------------------------------------------------------------------------// ANCHOR
-
-// width and height
-const sceneGeometry = new THREE.PlaneGeometry(visibleWidthAtZDepth(true, camera) / 8, visibleHeightAtZDepth(true, camera) / 8, 100, 100)
-// NOTE mesh basic material doesnt require light
-const sceneMaterial = new THREE.MeshBasicMaterial({color: 0xFF69B4, side: THREE.DoubleSide})
-// NOTE this one does
-// const sceneMaterial = new THREE.MeshPhongMaterial({
-//   // color: 0xff0000, would usually incluce, but we have the vertices
-//   side: THREE.DoubleSide, 
-//   flatShading: THREE.FlatShading,
-
-// // allowing custom colors, but we also need const colors
-// vertexColors: true})
-
-const sceneMesh = new THREE.Mesh(sceneGeometry, sceneMaterial)
-
-sceneMesh.position.z -= 60
-sceneMesh.position.x = innerWidth * 0.02;
-sceneMesh.position.y = innerHeight * 0.02;
-
-scene.add(sceneMesh)
-
-
 // ANCHOR -------------------------------- ADDING THE PLANE -----------------------------
 //------------------------------------------------------------------------------------------------------------------------------// ANCHOR
 
 // width and height
-const planeGeometry = new THREE.PlaneGeometry(visibleWidthAtZDepth(true, camera), visibleHeightAtZDepth(true, camera) * .6, 100, 100)
+const planeGeometry = new THREE.PlaneGeometry(visibleWidthAtZDepth(true, camera), .8 * visibleHeightAtZDepth(true, camera), 100, 100)
 // NOTE mesh basic material doesnt require light
 // const planeMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, side: THREE.DoubleSide})
 // NOTE this one does
@@ -188,8 +161,7 @@ vertexColors: true})
 
 const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial)
 
-planeMesh.position.y -= (visibleHeightAtZDepth(true, camera) - .8 * visibleHeightAtZDepth(true, camera)) 
-planeMesh.rotateX(-7.5)
+planeMesh.position.y -= 10
 
 scene.add(planeMesh)
 
@@ -236,221 +208,6 @@ lightB.position.set(0, 0, -15)
 scene.add(lightB)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-let posX;
-let posY;
-
-let mouseDown = false;
-
-function main() {
-  const canvas = document.querySelector("#c");
-  // const renderer = new THREE.WebGLRenderer({ canvas });
-  renderer.autoClearColor = false;
-
-  posX = renderer.domElement.clientWidth / 2;
-  posY = renderer.domElement.clientHeight / 2;
-
-  const fov = 75;
-  const aspect = 2; // the canvas default
-  const near = 0.1;
-  const far = 5;
-  // const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.z = 2;
-
-  const scene = new THREE.Scene();
-  const oRadius = 4;
-  const oDetail = 2;
-  const geometry = new THREE.OctahedronGeometry(oRadius, oDetail);
-  const plane = new THREE.PlaneBufferGeometry(2, 2);
-
-  const fragmentShader = `
-            #include <common>
-
-            uniform vec3 iResolution;
-            uniform float iTime;
-            uniform vec4 iMouse;
-
-            uniform sampler2D iChannel0;
-
-
-            vec2 arrangeCoords(vec2 p) {
-                vec2 q = p.xy/iResolution.xy;
-                vec2 r = -1.0+2.0*q;
-              r.x *= iResolution.x/iResolution.y;
-                return r;
-            }
-
-            void mainImage( out vec4 fragColor, in vec2 fragCoord ){
-              float speed = .1;
-              float scale = 0.002;
-              vec2 p = arrangeCoords(fragCoord);
-              for(int i=1; i<10; i++){
-                  p.x+=0.3/float(i)*sin(float(i)*3.*p.y+iTime*speed)+iMouse.x/1000.;
-                  p.y+=0.3/float(i)*cos(float(i)*3.*p.x+iTime*speed)+iMouse.y/1000.;
-              }
-              float r=cos(p.x+p.y+1.)*.5+.5;
-              float g=sin(p.x+p.y+1.)*.5+.5;
-              float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.5;
-              vec3 color = vec3(r,g,b);
-              fragColor = vec4(color,1);
-            }
-
-            varying vec2 vUv;
-          void main() {
-            mainImage(gl_FragColor, gl_FragCoord.xy);
-          }
-      `;
-
-  const vertexShader = `
-        varying vec2 vUv;
-        void main() {
-            vUv = uv;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-        }
-        `;
-
-  const loader = new THREE.TextureLoader();
-  const texture = loader.load(
-    "https://threejsfundamentals.org/threejs/resources/images/bayer.png"
-  );
-  texture.minFilter = THREE.NearestFilter;
-  texture.magFilter = THREE.NearestFilter;
-  texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.RepeatWrapping;
-
-  // canvas.addEventListener("mousedown", (e) => {
-  //   mouseDown = true;
-  // });
-
-  // canvas.addEventListener("mouseup", (e) => {
-  //   mouseDown = false;
-  // });
-
-  // canvas.addEventListener("mousemove", (e) => {
-  //   if (mouseDown) {
-  //     posX = e.layerX;
-  //     posY = e.layerY;
-  //   }
-  //   console.log(posX, posY);
-  // });
-
-  const uniforms = {
-    iTime: { value: 0 },
-    iResolution: { value: new THREE.Vector3() },
-    iMouse: { value: new THREE.Vector2() }
-  };
-  const material = new THREE.ShaderMaterial({
-    vertexShader,
-    fragmentShader,
-    uniforms
-  });
-
-  const bgMaterial = new THREE.ShaderMaterial({
-    fragmentShader,
-    uniforms
-  });
-
-  material.side = THREE.BackSide;
-
-  function makeInstance(geometry, x) {
-    const threeDObject = new THREE.Mesh(geometry, material);
-    scene.add(threeDObject);
-
-    threeDObject.position.x = x;
-
-    return threeDObject;
-  }
-
-  const threeDObjects = [makeInstance(geometry, 0)];
-
-  function resizeRendererToDisplaySize(renderer) {
-    const canvas = renderer.domElement;
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-    const needResize = canvas.width !== width || canvas.height !== height;
-    if (needResize) {
-      renderer.setSize(width, height, false);
-    }
-    return needResize;
-  }
-
-  function render(time) {
-    time *= 0.001; // convert to seconds
-
-    if (resizeRendererToDisplaySize(renderer)) {
-      const canvas = renderer.domElement;
-      camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      camera.updateProjectionMatrix();
-    }
-
-    // threeDObjects.forEach((threeDObject, ndx) => {
-    //   const speed = 1 + ndx * 0.1;
-    //   const rot = (time * speed) / 2;
-    //   threeDObject.rotation.x = rot;
-    //   threeDObject.rotation.y = rot;
-    // });
-
-    const canvas = renderer.domElement;
-    uniforms.iResolution.value.set(canvas.width, canvas.height, 1);
-    uniforms.iTime.value = time;
-    uniforms.iMouse.value.set(posX, posY);
-
-    renderer.render(scene, camera);
-
-    requestAnimationFrame(render);
-  }
-
-  requestAnimationFrame(render);
-}
-
-main();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // NOTE ----------------------------------------------  ORBIT CONTROLS -----------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------// ANCHOR
 
@@ -464,92 +221,6 @@ const mouse = {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const musicHelper = (function(){
-  let wrap   = document.querySelector( '#player' ); 
-  let button = wrap ? wrap.querySelector( 'button' ) : null; 
-  let audio  = new Audio( 'http://ice1.somafm.com/u80s-256-mp3' ); 
-  let step   = 0.01;
-  let active = false; 
-  let sto    = null; 
-  
-  let fadeIn = () => {
-   audio.volume += 0.01; 
-   if ( audio.volume >= 0.2 ) { audio.volume = 0.2; return; }
-   sto = setTimeout( fadeIn, 100 ); 
-  };
-  
-  let fadeOut = () => {
-   audio.volume -= 0.02; 
-   if ( audio.volume <= 0.01 ) { audio.volume = 0; audio.pause(); return; }
-   sto = setTimeout( fadeOut, 100 ); 
-  };
-  
-  let play = () => {
-   if ( sto ) clearTimeout( sto ); 
-   active = true;
-   button.textContent = 'Stop music'; 
-   audio.play(); 
-   fadeIn();
-  };
-  
-  let stop = () => {
-   if ( sto ) clearTimeout( sto ); 
-   active = false;
-   button.textContent = 'Play music'; 
-   fadeOut();
-  };
-  
-  button.addEventListener( 'click', e => {
-   e.stopPropagation(); 
-   e.preventDefault(); 
-   if ( active ) { stop(); } 
-   else { play(); }
-  });
-  
-  audio.preload = 'auto'; 
-  audio.muted   = false; 
-  audio.volume  = 0;
-  return { play, stop };
- })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // TODO THIS NEEDS TO BE ON BOTTOM
 // ANCHOR ------------------------------------ ANIMATION ------------------------------
 // TODO THIS NEEDS TO BE ON BOTTOM
@@ -559,7 +230,6 @@ function animate() {
   requestAnimationFrame(animate)
 //makes sure everything is shown on screen
 renderer.render(scene, camera)
-
 
 // // testing the rotation
 // mesh.rotation.x += 0.01
