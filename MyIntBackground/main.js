@@ -11,7 +11,7 @@ import * as THREE from 'three';
 
 import * as dat from "dat.gui"
 
-
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 
 
@@ -238,7 +238,25 @@ scene.add(lightB)
 
 
 
+const loader = new GLTFLoader();
 
+loader.load( 'scene.gltf', function ( gltf ) {
+
+scene.add( gltf.scene );
+
+gltf.scene.position.x -= 15
+gltf.scene.position.y -= 10
+gltf.scene.position.z -= 20 
+gltf.scene.rotateY(-50)
+
+
+}, undefined, function ( error ) {
+
+	console.error( error );
+
+} );
+
+// doggo.posX = 100
 
 
 
