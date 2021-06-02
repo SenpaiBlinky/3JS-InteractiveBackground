@@ -84,3 +84,40 @@ body {
   right: 1em;
   bottom: 1em;
 }
+
+/* --------------- NAV BAR ------------------
+.nav-bar
+{
+    top: 0;
+    position: sticky;
+    z-index: 3;
+}
+.navbar
+{
+    background-color: #000;
+}
+.navbar-brand img
+{
+    height: 100px;
+}
+
+.nav-bar .fa-bars
+{
+    font-size: 35px;
+    color: #fff;
+}
+
+.navbar-toggler
+{
+    outline: none !important;
+}
+.navbar-nav
+{
+    float: right;
+    text-align: right;
+}
+
+.nav-link
+{
+    color: #fff !important;
+} */

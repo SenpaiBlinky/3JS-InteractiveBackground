@@ -70,58 +70,62 @@ const visibleWidthAtZDepth = ( depth, camera ) => {
 //------------------------------------------------------------------------------------------------------------------------------// ANCHOR
 
 // NOTE creating a new slider for dat gui with a name of width and start value of 10
-const gui = new dat.GUI()
-const world = {
-  plane: {
-    width: visibleWidthAtZDepth(true, camera), // ^^ note is refering to this line
-    height: visibleHeightAtZDepth(true, camera),
-    widthSegments: 100,
-    heightSegments: 100
-  }
-}
+// const gui = new dat.GUI()
+// const world = {
+//   plane: {
+//     width: visibleWidthAtZDepth(true, camera), // ^^ note is refering to this line
+//     height: visibleHeightAtZDepth(true, camera),
+//     widthSegments: 100,
+//     heightSegments: 100
+//   }
+// }
 
-// NOTE adding the slider's min and max values
-gui.add(world.plane, "width", 100,  visibleWidthAtZDepth(true, camera) + 100).onChange(generatePlane)
+// // NOTE adding the slider's min and max values
+// gui.add(world.plane, "width", 100,  visibleWidthAtZDepth(true, camera) + 100).onChange(generatePlane)
 
-// NOTE adding the slider's min and max values
-gui.add(world.plane, "height", 100, visibleHeightAtZDepth(true, camera) + 100).onChange(generatePlane)
+// // NOTE adding the slider's min and max values
+// gui.add(world.plane, "height", 100, visibleHeightAtZDepth(true, camera) + 100).onChange(generatePlane)
 
-// NOTE adding the slider's min and max values
-gui.add(world.plane, "widthSegments", 1, 150).onChange(generatePlane)
+// // NOTE adding the slider's min and max values
+// gui.add(world.plane, "widthSegments", 1, 150).onChange(generatePlane)
 
-// NOTE adding the slider's min and max values
-gui.add(world.plane, "heightSegments", 1, 150).onChange(generatePlane)
+// // NOTE adding the slider's min and max values
+// gui.add(world.plane, "heightSegments", 1, 150).onChange(generatePlane)
 
-function generatePlane() {
+// function generatePlane() {
 
-    // removing old geometry
-    planeMesh.geometry.dispose()
-    // adding new geometry value
-    planeMesh.geometry = new THREE.PlaneGeometry(world.plane.width, world.plane.height, world.plane.heightSegments, world.plane.heightSegments)
+//     // removing old geometry
+//     planeMesh.geometry.dispose()
+//     // adding new geometry value
+//     planeMesh.geometry = new THREE.PlaneGeometry(world.plane.width, world.plane.height, world.plane.heightSegments, world.plane.heightSegments)
   
     
-  // we got this from the console
-  var vertArray = planeMesh.geometry.attributes.position.array
+//   // we got this from the console
+//   var vertArray = planeMesh.geometry.attributes.position.array
   
-    // NOTE loop for rigidness
+//     // NOTE loop for rigidness
   
-  for (let i = 0; i < vertArray.length; i+= 3) {
-    var x = vertArray[i]
-    var y = vertArray[i + 1]
-    var z = vertArray[i + 2]
+//   for (let i = 0; i < vertArray.length; i++) {
+//     var x = vertArray[i]
+//     var y = vertArray[i + 1]
+//     var z = vertArray[i + 2]
   
-    vertArray[i + 2] = z + Math.random()
-  
-  }
+//     vertArray[i] = x + Math.random() - 0.5
+//     vertArray[i + 1] = y + Math.random() - 0.5
+//     vertArray[i + 2] = z + Math.random()
 
-  const colors = []
+//     randomValues.push(Math.random())
+  
+//   }
 
-for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
-  colors.push(0,.19,.4)
-}
+//   const colors = []
 
-planeMesh.geometry.setAttribute("color", new THREE.BufferAttribute(new Float32Array(colors), 3))
-}
+// for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
+//   colors.push(0,.19,.4)
+// }
+
+// planeMesh.geometry.setAttribute("color", new THREE.BufferAttribute(new Float32Array(colors), 3))
+// }
 
 
 
@@ -167,7 +171,7 @@ sceneMesh.position.z -= 60
 sceneMesh.position.x = innerWidth * 0.02;
 sceneMesh.position.y = innerHeight * 0.02;
 
-scene.add(sceneMesh)
+// scene.add(sceneMesh)
 
 
 // ANCHOR -------------------------------- ADDING THE PLANE -----------------------------
@@ -204,16 +208,31 @@ for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
 // we got this from the console
 const vertArray = planeMesh.geometry.attributes.position.array
 
+const randomValues = []
+
+
 // NOTE loop for rigidness
 
-for (let i = 0; i < vertArray.length; i+= 3) {
+for (let i = 0; i < vertArray.length; i++) {
+
+  if (i % 3 === 0 ) {
   var x = vertArray[i]
   var y = vertArray[i + 1]
   var z = vertArray[i + 2]
 
+  
+  vertArray[i + 1] = y + Math.random() -.5
+  vertArray[i] = x + Math.random() - .5
   vertArray[i + 2] = z + Math.random()
+  }
+
+  randomValues.push(Math.random() - 0.5 )
 
 }
+
+planeMesh.geometry.attributes.position.originalPosition = planeMesh.geometry.attributes.position.array
+
+planeMesh.geometry.attributes.position.randomValues = randomValues
 
 // ANCHOR ------------------------ ADDING COLOR ATRIBUTE
 //------------------------------------------------------------------------------------------------------------------------------// ANCHOR
@@ -236,25 +255,26 @@ lightB.position.set(0, 0, -15)
 scene.add(lightB)
 
 
+// ANCHOR --------------------------------- DOGGO 3D --------------------------------------------------------
+// ------------------------------------------------------------------------------------------------ ANCHOR
+
+// const loader = new GLTFLoader();
+
+// loader.load( 'scene.gltf', function ( gltf ) {
+
+// scene.add( gltf.scene );
+
+// gltf.scene.position.x -= 15
+// gltf.scene.position.y -= 10
+// gltf.scene.position.z -= 20 
+// gltf.scene.rotateY(-50)
 
 
-const loader = new GLTFLoader();
+// }, undefined, function ( error ) {
 
-loader.load( 'scene.gltf', function ( gltf ) {
+// 	console.error( error );
 
-scene.add( gltf.scene );
-
-gltf.scene.position.x -= 15
-gltf.scene.position.y -= 10
-gltf.scene.position.z -= 20 
-gltf.scene.rotateY(-50)
-
-
-}, undefined, function ( error ) {
-
-	console.error( error );
-
-} );
+// } );
 
 // doggo.posX = 100
 
@@ -328,9 +348,9 @@ function main() {
                   p.x+=0.3/float(i)*sin(float(i)*3.*p.y+iTime*speed)+iMouse.x/1000.;
                   p.y+=0.3/float(i)*cos(float(i)*3.*p.x+iTime*speed)+iMouse.y/1000.;
               }
-              float r=cos(p.x+p.y+1.)*.5+.5;
-              float g=sin(p.x+p.y+1.)*.5+.5;
-              float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.5;
+              float r=cos(p.x+p.y+1.)*.5+.1;
+              float g=sin(p.x+p.y+1.)*.5+.1;                   //NOTE colors
+              float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.9;
               vec3 color = vec3(r,g,b);
               fragColor = vec4(color,1);
             }
@@ -340,6 +360,15 @@ function main() {
             mainImage(gl_FragColor, gl_FragCoord.xy);
           }
       `;
+
+      // ANCHOR --------------------------- OLD COLORS BELOW ----------------------------------------
+
+      // float r=cos(p.x+p.y+1.)*.5+.1;
+      //         float g=sin(p.x+p.y+1.)*.5+.1;                   //NOTE colors for purple-ish
+      //         float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.9;
+
+      // --------------------------------------------------------------------------------------// ANCHOR
+
 
   const vertexShader = `
         varying vec2 vUv;
@@ -572,16 +601,33 @@ const musicHelper = (function(){
 // ANCHOR ------------------------------------ ANIMATION ------------------------------
 // TODO THIS NEEDS TO BE ON BOTTOM
 //------------------------------------------------------------------------------------------------------------------------------// ANCHOR
+let frame = 0
 
 function animate() {
   requestAnimationFrame(animate)
 //makes sure everything is shown on screen
 renderer.render(scene, camera)
+frame += 0.01
 
 
 // // testing the rotation
 // mesh.rotation.x += 0.01
 // mesh.rotation.y += 0.01
+
+
+// NOTE --- MOVING EFFECT ----------
+
+const { array, originalPosition, randomValues } = planeMesh.geometry.attributes.position
+
+for (let i = 0; i < array.length; i += 3) {
+  
+  array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.009
+
+  array[i + 1] = originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.003
+}
+
+planeMesh.geometry.attributes.position.needsUpdate = true
+
 
 // NOTE ---------------------------------- RAYCASTER IS HERE -----------------------------------------------
 
