@@ -13,6 +13,8 @@ import * as dat from "dat.gui"
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
+import * as TWEEN from "@tweenjs/tween.js"; //filler
+
 
 
 
@@ -171,7 +173,7 @@ sceneMesh.position.z -= 60
 sceneMesh.position.x = innerWidth * 0.02;
 sceneMesh.position.y = innerHeight * 0.02;
 
-// scene.add(sceneMesh)
+scene.add(sceneMesh)
 
 
 // ANCHOR -------------------------------- ADDING THE PLANE -----------------------------
@@ -567,12 +569,12 @@ const musicHelper = (function(){
    fadeOut();
   };
   
-  button.addEventListener( 'click', e => {
-   e.stopPropagation(); 
-   e.preventDefault(); 
-   if ( active ) { stop(); } 
-   else { play(); }
-  });
+  // button.addEventListener( 'click', e => {
+  //  e.stopPropagation(); 
+  //  e.preventDefault(); 
+  //  if ( active ) { stop(); } 
+  //  else { play(); }
+  // });
   
   audio.preload = 'auto'; 
   audio.muted   = false; 
@@ -580,7 +582,10 @@ const musicHelper = (function(){
   return { play, stop };
  })();
 
-
+ document.getElementById("myBtn").addEventListener("click", function() {
+  var currentLoop = frame;
+  
+});
 
 
 
