@@ -37,7 +37,7 @@ document.body.appendChild(renderer.domElement)
 
 
 // moving camera in order to see the mesh
-camera.position.z = 100 // daaa
+camera.position.z = 100 // daaaa
 
 
 
@@ -173,7 +173,7 @@ sceneMesh.position.z -= 60
 sceneMesh.position.x = innerWidth * 0.02;
 sceneMesh.position.y = innerHeight * 0.02;
 
-scene.add(sceneMesh)
+// scene.add(sceneMesh)
 
 
 // ANCHOR -------------------------------- ADDING THE PLANE -----------------------------
