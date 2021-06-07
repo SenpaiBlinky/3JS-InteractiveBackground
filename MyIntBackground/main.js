@@ -37,7 +37,7 @@ document.body.appendChild(renderer.domElement)
 
 
 // moving camera in order to see the mesh
-camera.position.z = 100 // daaaaa
+camera.position.z = 100 // daaaaaa
 
 
 
