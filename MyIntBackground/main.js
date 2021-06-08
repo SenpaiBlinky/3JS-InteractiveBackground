@@ -13,7 +13,7 @@ import * as dat from "dat.gui"
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
-import * as TWEEN from "@tweenjs/tween.js"; //filler
+import * as TWEEN from "@tweenjs/tween.js"; //fillerino
 
 
 
