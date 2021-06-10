@@ -569,12 +569,12 @@ const musicHelper = (function(){
    fadeOut();
   };
   
-  // button.addEventListener( 'click', e => {
-  //  e.stopPropagation(); 
-  //  e.preventDefault(); 
-  //  if ( active ) { stop(); } 
-  //  else { play(); }
-  // });
+  button.addEventListener( 'click', e => {
+   e.stopPropagation(); 
+   e.preventDefault(); 
+   if ( active ) { stop(); } 
+   else { play(); }
+  });
   
   audio.preload = 'auto'; 
   audio.muted   = false; 
