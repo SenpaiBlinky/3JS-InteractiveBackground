@@ -88,6 +88,7 @@ body {
   border-radius: 4px;
   cursor: pointer;
 }
+
 .player button:hover {
   border-color: rgba(255, 255, 255, 0.6);
 }
