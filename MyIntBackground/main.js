@@ -30,7 +30,7 @@ const renderer = new THREE.WebGLRenderer();
 
 // params (width,height)
 renderer.setSize(innerWidth,innerHeight)
-// set the pixel ratio for a crispier picture
+// set the pixel ratio for a crispier picture :)
 renderer.setPixelRatio(devicePixelRatio)
 // adding the renderer to dom
 document.body.appendChild(renderer.domElement)
