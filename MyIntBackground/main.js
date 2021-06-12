@@ -15,6 +15,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 import * as TWEEN from "@tweenjs/tween.js"; //fillerino - daa
 
+import { InteractionManager } from "three.interactive";
+
 
 
 
@@ -24,9 +26,19 @@ import * as TWEEN from "@tweenjs/tween.js"; //fillerino - daa
 // scene creation
 const scene = new THREE.Scene();
 // parameters (field of view, aspect ration, where to see from, where to see till)
-const camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000);
+function createCamera() {
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
+  camera.position.z = 5;
+  return camera;
+}
+const camera = createCamera();
 // how we see things
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 
 // params (width,height)
 renderer.setSize(innerWidth,innerHeight)
@@ -300,6 +312,122 @@ scene.add(lightB)
 
 
 
+function createRenderer() {
+  const app = document.getElementsByTagName("BODY")[0];
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  app.appendChild(renderer.domElement);
+  return renderer;
+}
+
+function createScene() {
+  // const scene = new THREE.Scene();
+  // scene.background = new THREE.Color(0xffffff);
+  // return scene;
+}
+
+
+
+function createCube({ color, x, y }) {
+  const geometry = new THREE.BoxGeometry();
+  const material = new THREE.MeshLambertMaterial({ color });
+  const cube = new THREE.Mesh(geometry, material);
+  cube.position.set(x, y, 0);
+
+  return cube;
+}
+
+
+function createLight() {
+  // const light = new THREE.PointLight(0xffffff, 1, 1000);
+  // light.position.set(0, 0, 10);
+  // return light;
+}
+
+
+// const renderer = createRenderer();
+// const scene = createScene();
+
+
+const cubes = {
+  // pink: createCube({ color: 0xff00ce, x: -1, y: -1.5 }),
+  // purple: createCube({ color: 0x9300fb, x: 1, y: -2 })
+  // blue: createCube({ color: 0x0065d9, x: 1, y: 1 }),
+  // cyan: createCube({ color: 0x00d7d0, x: -3, y: 1 })
+};
+
+// const light = createLight();
+
+for (const object of Object.values(cubes)) {
+  scene.add(object);
+}
+
+// scene.add(light);
+
+
+
+const interactionManager = new InteractionManager(
+  renderer,
+  camera,
+  renderer.domElement
+);
+
+// MAKE AN OBJECT AND CONNECT EACH PIECE
+for (const [name, object] of Object.entries(cubes)) {
+  object.addEventListener("click", (event) => {
+    event.stopPropagation();
+    console.log(`${name} cube was clicked`);
+    const cube = event.target;
+    console.log(event.target)
+    const coords = { x: camera.position.x, y: camera.position.y };
+    new TWEEN.Tween(coords)
+      .to({ x: cube.position.x, y: cube.position.y })
+      .onUpdate(() =>
+        camera.position.set(coords.x, coords.y, camera.position.z),
+      )
+      .start();
+  });
+  interactionManager.add(object);
+  scene.add(object);
+}
+
+const mPT = document.getElementById("mainPageText")
+
+const button = document.getElementById("myBtn")
+button.addEventListener("click", (event) => {
+ 
+      camera.position.x -= 10
+      mPT.style.visibility = "hidden"
+   
+});
+
+const button2 = document.getElementById("myBtn2")
+button2.addEventListener("click", (event) => {
+ 
+      camera.position.x += 10
+    
+});
+
+const button3 = document.getElementById("myBtn3")
+button3.addEventListener("click", (event) => {
+ 
+      camera.position.x += 10
+      mPT.style.visibility = "visible"
+    
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -553,7 +681,7 @@ const mouse = {
 const musicHelper = (function(){
   let wrap   = document.querySelector( '#player' ); 
   let button = wrap ? wrap.querySelector( 'button' ) : null; 
-  let audio  = new Audio( 'http://ice1.somafm.com/u80s-256-mp3' ); 
+  let audio  = new Audio( 'DMCB.mp3' ); //
   let step   = 0.01;
   let active = false; 
   let sto    = null; 
@@ -624,7 +752,21 @@ const musicHelper = (function(){
 //------------------------------------------------------------------------------------------------------------------------------// ANCHOR
 let frame = 0
 
-function animate() {
+// function animate(callback) {
+//   function loop(time) {
+//     callback(time);
+//     requestAnimationFrame(loop);
+//   }
+//   requestAnimationFrame(loop);
+// }
+
+
+function animate(callback) {
+
+  function loop(time) {
+    callback(time);
+    requestAnimationFrame(loop);
+  }
   requestAnimationFrame(animate)
 //makes sure everything is shown on screen
 renderer.render(scene, camera)
@@ -718,7 +860,14 @@ if (intersects.length > 0) {
 }
 }
 
-animate()
+// animate()
+
+
+animate((time) => {
+  renderer.render(scene, camera);
+  interactionManager.update();
+  TWEEN.update(time);
+});
 
 // ANCHOR ------------------------------------   HOVER EFFECT ---------------------------------
 //------------------------------------------------------------------------------------------------------------------------------// ANCHOR

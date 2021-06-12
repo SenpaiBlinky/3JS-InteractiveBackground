@@ -98,16 +98,18 @@ body {
   bottom: 1em;
 }
 
-/* --------------- NAV BAR ------------------
-.nav-bar
+/* /* --------------- NAV BAR ------------------ */
+/* .nav-bar
 {
-    top: 0;
-    position: sticky;
+    left: 35%;
+    bottom: 0;
+    position: relative;
     z-index: 3;
+    text-align: center;
 }
 .navbar
 {
-    background-color: #000;
+    background-color: none;
 }
 .navbar-brand img
 {
@@ -116,7 +118,7 @@ body {
 
 .nav-bar .fa-bars
 {
-    font-size: 35px;
+    font-size: 100%;
     color: #fff;
 }
 
@@ -133,4 +135,4 @@ body {
 .nav-link
 {
     color: #fff !important;
-} */
+}  */
