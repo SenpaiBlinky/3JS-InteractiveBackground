@@ -167,9 +167,9 @@ const raycaster = new THREE.Raycaster()
 //------------------------------------------------------------------------------------------------------------------------------// ANCHOR
 
 // width and height
-const sceneGeometry = new THREE.PlaneGeometry(visibleWidthAtZDepth(true, camera) / 8, visibleHeightAtZDepth(true, camera) / 8, 100, 100)
+const sceneGeometry = new THREE.PlaneGeometry(visibleWidthAtZDepth(true, camera) , visibleHeightAtZDepth(true, camera) , 100, 100)
 // NOTE mesh basic material doesnt require light
-const sceneMaterial = new THREE.MeshBasicMaterial({color: 0xFF69B4, side: THREE.DoubleSide})
+const sceneMaterial = new THREE.MeshBasicMaterial({color: 0xA13ECC, side: THREE.DoubleSide})
 // NOTE this one does
 // const sceneMaterial = new THREE.MeshPhongMaterial({
 //   // color: 0xff0000, would usually incluce, but we have the vertices
@@ -181,11 +181,10 @@ const sceneMaterial = new THREE.MeshBasicMaterial({color: 0xFF69B4, side: THREE.
 
 const sceneMesh = new THREE.Mesh(sceneGeometry, sceneMaterial)
 
-sceneMesh.position.z -= 60
-sceneMesh.position.x = innerWidth * 0.02;
-sceneMesh.position.y = innerHeight * 0.02;
+sceneMesh.position.z -= 40
+sceneMesh.position.x -= 200
 
-// scene.add(sceneMesh)
+scene.add(sceneMesh)
 
 
 // ANCHOR -------------------------------- ADDING THE PLANE -----------------------------
@@ -392,13 +391,24 @@ for (const [name, object] of Object.entries(cubes)) {
 }
 
 const mPT = document.getElementById("mainPageText")
+const aboutMe = document.getElementById("aboutMe")
+aboutMe.style.visibility = "hidden"
+
 
 const button = document.getElementById("myBtn")
 button.addEventListener("click", (event) => {
  
-      camera.position.x -= 10
+      camera.position.x -= 200
       mPT.style.visibility = "hidden"
-   
+      aboutMe.style.visibility = "visible"
+
+
+      document.getElementById("myBtn").classList.add("bg-black")
+      document.getElementById("myBtn2").classList.add("bg-black")
+      document.getElementById("myBtn3").classList.add("bg-black")
+      document.getElementById("myBtn4").classList.add("bg-black")
+      document.getElementById("myBtn5").classList.add("bg-black")
+
 });
 
 const button2 = document.getElementById("myBtn2")
@@ -411,8 +421,15 @@ button2.addEventListener("click", (event) => {
 const button3 = document.getElementById("myBtn3")
 button3.addEventListener("click", (event) => {
  
-      camera.position.x += 10
-      mPT.style.visibility = "visible"
+  mPT.style.visibility = "visible"
+  aboutMe.style.visibility = "hidden"
+      camera.position.x += 200
+      
+      document.getElementById("myBtn").classList.remove("bg-black")
+      document.getElementById("myBtn2").classList.remove("bg-black")
+      document.getElementById("myBtn3").classList.remove("bg-black")
+      document.getElementById("myBtn4").classList.removed("bg-black")
+      document.getElementById("myBtn5").classList.remove("bg-black")
     
 });
 
