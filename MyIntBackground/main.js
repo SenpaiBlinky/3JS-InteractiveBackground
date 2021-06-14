@@ -409,7 +409,7 @@ button.addEventListener("click", (event) => {
       document.getElementById("myBtn4").classList.add("bg-black")
       document.getElementById("myBtn5").classList.add("bg-black")
 
-});
+}); //a
 
 const button2 = document.getElementById("myBtn2")
 button2.addEventListener("click", (event) => {
