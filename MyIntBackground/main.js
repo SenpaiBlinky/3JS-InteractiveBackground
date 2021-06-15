@@ -399,14 +399,15 @@ const button = document.getElementById("myBtn")
 button.addEventListener("click", (event) => {
  
       mPT.style.visibility = "hidden"
+      
       // aboutMe.style.visibility = "visible"
 
 
-      document.getElementById("myBtn").classList.add("bg-black")
-      document.getElementById("myBtn2").classList.add("bg-black")
-      document.getElementById("myBtn3").classList.add("bg-black")
-      document.getElementById("myBtn4").classList.add("bg-black")
-      document.getElementById("myBtn5").classList.add("bg-black")
+      // document.getElementById("myBtn").classList.add("bg-black")
+      // document.getElementById("myBtn2").classList.add("bg-black")
+      // document.getElementById("myBtn3").classList.add("bg-black")
+      // document.getElementById("myBtn4").classList.add("bg-black")
+      // document.getElementById("myBtn5").classList.add("bg-black")
 
 }); //aa
 
@@ -414,6 +415,13 @@ const button2 = document.getElementById("myBtn2")
 button2.addEventListener("click", (event) => {
  
     workPage();
+
+    orangeBackground()
+    animate((time) => {
+      renderer.render(scene, camera);
+      interactionManager.update();
+      TWEEN.update(time);
+    });
     
 });
 
@@ -424,13 +432,35 @@ button3.addEventListener("click", (event) => {
   aboutMe.style.visibility = "hidden"
       homePage();
       
-      document.getElementById("myBtn").classList.remove("bg-black")
-      document.getElementById("myBtn2").classList.remove("bg-black")
-      document.getElementById("myBtn3").classList.remove("bg-black")
-      document.getElementById("myBtn4").classList.removed("bg-black")
-      document.getElementById("myBtn5").classList.remove("bg-black")
-
       
+      // document.getElementById("myBtn").classList.remove("bg-black")
+      // document.getElementById("myBtn2").classList.remove("bg-black")
+      // document.getElementById("myBtn3").classList.remove("bg-black")
+      // document.getElementById("myBtn4").classList.removed("bg-black")
+      // document.getElementById("myBtn5").classList.remove("bg-black")
+
+      purpleBackground ();
+
+      animate();
+    
+    
+});
+
+const button4 = document.getElementById("myBtn4")
+button4.addEventListener("click", (event) => {
+ 
+    workPage();
+
+    greenBackground()
+    
+});
+
+const button5 = document.getElementById("myBtn5")
+button5.addEventListener("click", (event) => {
+ 
+    workPage();
+
+    blueBackground()
     
 });
 
@@ -472,9 +502,9 @@ function workPage () {
 
 
 
-function background () {
+function orangeBackground () {
 
-// ANCHOR --------------------------------------- BACKGROUND -------------------------------------------------
+// ANCHOR --------------------------------------- ORANGE BACKGROUND -------------------------------------------------
 // ---------------------------------------------------------------------------------------------- ANCHOR
 
 let posX;
@@ -504,44 +534,6 @@ function main() {
   const plane = new THREE.PlaneBufferGeometry(2, 2);
 
   var pointOne = .1;
-
-  // const fragmentShader = `
-  //           #include <common>
-
-  //           uniform vec3 iResolution;
-  //           uniform float iTime;
-  //           uniform vec4 iMouse;
-
-  //           uniform sampler2D iChannel0;
-
-
-  //           vec2 arrangeCoords(vec2 p) {
-  //               vec2 q = p.xy/iResolution.xy;
-  //               vec2 r = -1.0+2.0*q;
-  //             r.x *= iResolution.x/iResolution.y;
-  //               return r;
-  //           }
-
-  //           void mainImage( out vec4 fragColor, in vec2 fragCoord ){
-  //             float speed = .1;
-  //             float scale = 0.002;
-  //             vec2 p = arrangeCoords(fragCoord);
-  //             for(int i=1; i<10; i++){
-  //                 p.x+=0.3/float(i)*sin(float(i)*3.*p.y+iTime*speed)+iMouse.x/1000.;
-  //                 p.y+=0.3/float(i)*cos(float(i)*3.*p.x+iTime*speed)+iMouse.y/1000.;
-  //             }
-  //             float r=cos(p.x+p.y+1.)*.5+.9001;                   //.9001  .1
-  //             float g=sin(p.x+p.y+1.)*.5+.9001;                   //NOTE.9001 colors   .1
-  //             float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.99;      //.99 .9
-  //             vec3 color = vec3(r,g,b);
-  //             fragColor = vec4(color,1);
-  //           }
-
-  //           varying vec2 vUv;
-  //         void main() {
-  //           mainImage(gl_FragColor, gl_FragCoord.xy);
-  //         }
-  //     `;
 
       const fragmentShader = `
             #include <common>
@@ -703,9 +695,9 @@ main();
 
 
 
-function background2 () {
+function purpleBackground () {
 
-  // ANCHOR --------------------------------------- BACKGROUND -------------------------------------------------
+  // ANCHOR ---------------------------------------PURPLE BACKGROUND -------------------------------------------------
   // ---------------------------------------------------------------------------------------------- ANCHOR
   
   let posX;
@@ -736,43 +728,7 @@ function background2 () {
   
     var pointOne = .1;
   
-    // const fragmentShader = `
-    //           #include <common>
-  
-    //           uniform vec3 iResolution;
-    //           uniform float iTime;
-    //           uniform vec4 iMouse;
-  
-    //           uniform sampler2D iChannel0;
-  
-  
-    //           vec2 arrangeCoords(vec2 p) {
-    //               vec2 q = p.xy/iResolution.xy;
-    //               vec2 r = -1.0+2.0*q;
-    //             r.x *= iResolution.x/iResolution.y;
-    //               return r;
-    //           }
-  
-    //           void mainImage( out vec4 fragColor, in vec2 fragCoord ){
-    //             float speed = .1;
-    //             float scale = 0.002;
-    //             vec2 p = arrangeCoords(fragCoord);
-    //             for(int i=1; i<10; i++){
-    //                 p.x+=0.3/float(i)*sin(float(i)*3.*p.y+iTime*speed)+iMouse.x/1000.;
-    //                 p.y+=0.3/float(i)*cos(float(i)*3.*p.x+iTime*speed)+iMouse.y/1000.;
-    //             }
-    //             float r=cos(p.x+p.y+1.)*.5+.9001;                   //.9001  .1
-    //             float g=sin(p.x+p.y+1.)*.5+.9001;                   //NOTE.9001 colors   .1
-    //             float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.99;      //.99 .9
-    //             vec3 color = vec3(r,g,b);
-    //             fragColor = vec4(color,1);
-    //           }
-  
-    //           varying vec2 vUv;
-    //         void main() {
-    //           mainImage(gl_FragColor, gl_FragCoord.xy);
-    //         }
-    //     `;
+   
   
         const fragmentShader = `
               #include <common>
@@ -799,9 +755,9 @@ function background2 () {
                     p.x+=0.3/float(i)*sin(float(i)*3.*p.y+iTime*speed)+iMouse.x/1000.;
                     p.y+=0.3/float(i)*cos(float(i)*3.*p.x+iTime*speed)+iMouse.y/1000.;
                 }
-                float r=cos(p.x+p.y+1.)*.5+.1;                   //.9001  .1
-                float g=sin(p.x+p.y+1.)*.5+.1;                   //NOTE.9001 colors   .1
-                float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.9;      //.99 .9
+                float r=cos(p.x+p.y+1.)*.1999+.1238;                   //.9001  .1
+                float g=sin(p.x+p.y+1.)*.1111+.92353;                   //NOTE.9001 colors   .1
+                float b=(sin(p.x+p.y)+cos(p.x+p.y))*.109+.1321;      //.99 .9
                 vec3 color = vec3(r,g,b);
                 fragColor = vec4(color,1);
               }
@@ -816,9 +772,9 @@ function background2 () {
   
         // ANCHOR --------------------------- OLD COLORS BELOW ----------------------------------------
   
-        // float r=cos(p.x+p.y+1.)*.5+.1;
-        //         float g=sin(p.x+p.y+1.)*.5+.1;                   //NOTE colors for purple-ish
-        //         float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.9;
+        //            float r=cos(p.x+p.y+1.)*.5+.1;                   //.9001  .1
+        //            float g=sin(p.x+p.y+1.)*.5+.1;                   //NOTE.9001 colors   .1
+        //            float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.9;      //.99 .9
   
         // --------------------------------------------------------------------------------------// ANCHOR
   
@@ -933,11 +889,591 @@ function background2 () {
 
 
 
+  function blueBackground () {
+
+    // ANCHOR ---------------------------------------BLUE BACKGROUND -------------------------------------------------
+    // ---------------------------------------------------------------------------------------------- ANCHOR
+    
+    let posX;
+    let posY;
+    
+    let mouseDown = false;
+    
+    function main() {
+      const canvas = document.querySelector("#c");
+      // const renderer = new THREE.WebGLRenderer({ canvas });
+      renderer.autoClearColor = false;
+    
+      posX = renderer.domElement.clientWidth / 2;
+      posY = renderer.domElement.clientHeight / 2;
+    
+      const fov = 75;
+      const aspect = 2; // the canvas default
+      const near = 0.1;
+      const far = 5;
+      // const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+      camera.position.z = 2;
+    
+      const scene = new THREE.Scene();
+      const oRadius = 4;
+      const oDetail = 2;
+      const geometry = new THREE.OctahedronGeometry(oRadius, oDetail);
+      const plane = new THREE.PlaneBufferGeometry(2, 2);
+    
+      var pointOne = .1;
+    
+     
+    
+          const fragmentShader = `
+                #include <common>
+    
+                uniform vec3 iResolution;
+                uniform float iTime;
+                uniform vec4 iMouse;
+    
+                uniform sampler2D iChannel0;
+    
+    
+                vec2 arrangeCoords(vec2 p) {
+                    vec2 q = p.xy/iResolution.xy;
+                    vec2 r = -1.0+2.0*q;
+                  r.x *= iResolution.x/iResolution.y;
+                    return r;
+                }
+    
+                void mainImage( out vec4 fragColor, in vec2 fragCoord ){
+                  float speed = .1;
+                  float scale = 0.002;
+                  vec2 p = arrangeCoords(fragCoord);
+                  for(int i=1; i<10; i++){
+                      p.x+=0.3/float(i)*sin(float(i)*3.*p.y+iTime*speed)+iMouse.x/1000.;
+                      p.y+=0.3/float(i)*cos(float(i)*3.*p.x+iTime*speed)+iMouse.y/1000.;
+                  }
+                  float r=cos(p.x+p.y+1.)*.1999+.1238;                   //.9001  .1
+                float g=sin(p.x+p.y+1.)*.1111+.92353;                   //NOTE.9001 colors   .1
+                float b=(sin(p.x+p.y)+cos(p.x+p.y))*.109+.9321;      //.99 .9
+                  vec3 color = vec3(r,g,b);
+                  fragColor = vec4(color,1);
+                }
+    
+                varying vec2 vUv;
+              void main() {
+                mainImage(gl_FragColor, gl_FragCoord.xy);
+              }
+          `;
+    
+          
+    
+          // ANCHOR --------------------------- OLD COLORS BELOW ----------------------------------------
+    
+          // float r=cos(p.x+p.y+1.)*.5+.1;
+          //         float g=sin(p.x+p.y+1.)*.5+.1;                   //NOTE colors for purple-ish
+          //         float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.9;
+    
+          // --------------------------------------------------------------------------------------// ANCHOR
+    
+    
+      const vertexShader = `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+            }
+            `;
+    
+      const loader = new THREE.TextureLoader();
+      const texture = loader.load(
+        "https://threejsfundamentals.org/threejs/resources/images/bayer.png"
+      );
+      texture.minFilter = THREE.NearestFilter;
+      texture.magFilter = THREE.NearestFilter;
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+    
+      // canvas.addEventListener("mousedown", (e) => {
+      //   mouseDown = true;
+      // });
+    
+      // canvas.addEventListener("mouseup", (e) => {
+      //   mouseDown = false;
+      // });
+    
+      // canvas.addEventListener("mousemove", (e) => {
+      //   if (mouseDown) {
+      //     posX = e.layerX;
+      //     posY = e.layerY;
+      //   }
+      //   console.log(posX, posY);
+      // });
+    
+      const uniforms = {
+        iTime: { value: 0 },
+        iResolution: { value: new THREE.Vector3() },
+        iMouse: { value: new THREE.Vector2() }
+      };
+      const material = new THREE.ShaderMaterial({
+        vertexShader,
+        fragmentShader,
+        uniforms
+      });
+    
+      const bgMaterial = new THREE.ShaderMaterial({
+        fragmentShader,
+        uniforms
+      });
+    
+      material.side = THREE.BackSide;
+    
+      function makeInstance(geometry, x) {
+        const threeDObject = new THREE.Mesh(geometry, material);
+        scene.add(threeDObject);
+    
+        threeDObject.position.x = x;
+    
+        return threeDObject;
+      }
+    
+      const threeDObjects = [makeInstance(geometry, 0)];
+    
+      function resizeRendererToDisplaySize(renderer) {
+        const canvas = renderer.domElement;
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        const needResize = canvas.width !== width || canvas.height !== height;
+        if (needResize) {
+          renderer.setSize(width, height, false);
+        }
+        return needResize;
+      }
+    
+      function render(time) {
+        time *= 0.001; // convert to seconds
+    
+        if (resizeRendererToDisplaySize(renderer)) {
+          const canvas = renderer.domElement;
+          camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          camera.updateProjectionMatrix();
+        }
+    
+        // threeDObjects.forEach((threeDObject, ndx) => {
+        //   const speed = 1 + ndx * 0.1;
+        //   const rot = (time * speed) / 2;
+        //   threeDObject.rotation.x = rot;
+        //   threeDObject.rotation.y = rot;
+        // });
+    
+        const canvas = renderer.domElement;
+        uniforms.iResolution.value.set(canvas.width, canvas.height, 1);
+        uniforms.iTime.value = time;
+        uniforms.iMouse.value.set(posX, posY);
+    
+        renderer.render(scene, camera);
+    
+        requestAnimationFrame(render);
+      }
+    
+      requestAnimationFrame(render);
+    }
+    
+    main();
+    
+    }
 
 
 
-background ();
-background2 ();
+
+    function yellowBackground () {
+
+      // ANCHOR ---------------------------------------YELLOW BACKGROUND -------------------------------------------------
+      // ---------------------------------------------------------------------------------------------- ANCHOR
+      
+      let posX;
+      let posY;
+      
+      let mouseDown = false;
+      
+      function main() {
+        const canvas = document.querySelector("#c");
+        // const renderer = new THREE.WebGLRenderer({ canvas });
+        renderer.autoClearColor = false;
+      
+        posX = renderer.domElement.clientWidth / 2;
+        posY = renderer.domElement.clientHeight / 2;
+      
+        const fov = 75;
+        const aspect = 2; // the canvas default
+        const near = 0.1;
+        const far = 5;
+        // const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+        camera.position.z = 2;
+      
+        const scene = new THREE.Scene();
+        const oRadius = 4;
+        const oDetail = 2;
+        const geometry = new THREE.OctahedronGeometry(oRadius, oDetail);
+        const plane = new THREE.PlaneBufferGeometry(2, 2);
+      
+        var pointOne = .1;
+      
+       
+      
+            const fragmentShader = `
+                  #include <common>
+      
+                  uniform vec3 iResolution;
+                  uniform float iTime;
+                  uniform vec4 iMouse;
+      
+                  uniform sampler2D iChannel0;
+      
+      
+                  vec2 arrangeCoords(vec2 p) {
+                      vec2 q = p.xy/iResolution.xy;
+                      vec2 r = -1.0+2.0*q;
+                    r.x *= iResolution.x/iResolution.y;
+                      return r;
+                  }
+      
+                  void mainImage( out vec4 fragColor, in vec2 fragCoord ){
+                    float speed = .1;
+                    float scale = 0.002;
+                    vec2 p = arrangeCoords(fragCoord);
+                    for(int i=1; i<10; i++){
+                        p.x+=0.3/float(i)*sin(float(i)*3.*p.y+iTime*speed)+iMouse.x/1000.;
+                        p.y+=0.3/float(i)*cos(float(i)*3.*p.x+iTime*speed)+iMouse.y/1000.;
+                    }
+                    float r=cos(p.x+p.y+1.)*.5+.1;                   //.9001  .1
+                    float g=sin(p.x+p.y+1.)*.5+.1;                   //NOTE.9001 colors   .1
+                    float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.9;      //.99 .9
+                    vec3 color = vec3(r,g,b);
+                    fragColor = vec4(color,1);
+                  }
+      
+                  varying vec2 vUv;
+                void main() {
+                  mainImage(gl_FragColor, gl_FragCoord.xy);
+                }
+            `;
+      
+            
+      
+            // ANCHOR --------------------------- OLD COLORS BELOW ----------------------------------------
+      
+            // float r=cos(p.x+p.y+1.)*.5+.1;
+            //         float g=sin(p.x+p.y+1.)*.5+.1;                   //NOTE colors for purple-ish
+            //         float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.9;
+      
+            // --------------------------------------------------------------------------------------// ANCHOR
+      
+      
+        const vertexShader = `
+              varying vec2 vUv;
+              void main() {
+                  vUv = uv;
+                  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+              }
+              `;
+      
+        const loader = new THREE.TextureLoader();
+        const texture = loader.load(
+          "https://threejsfundamentals.org/threejs/resources/images/bayer.png"
+        );
+        texture.minFilter = THREE.NearestFilter;
+        texture.magFilter = THREE.NearestFilter;
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+      
+        // canvas.addEventListener("mousedown", (e) => {
+        //   mouseDown = true;
+        // });
+      
+        // canvas.addEventListener("mouseup", (e) => {
+        //   mouseDown = false;
+        // });
+      
+        // canvas.addEventListener("mousemove", (e) => {
+        //   if (mouseDown) {
+        //     posX = e.layerX;
+        //     posY = e.layerY;
+        //   }
+        //   console.log(posX, posY);
+        // });
+      
+        const uniforms = {
+          iTime: { value: 0 },
+          iResolution: { value: new THREE.Vector3() },
+          iMouse: { value: new THREE.Vector2() }
+        };
+        const material = new THREE.ShaderMaterial({
+          vertexShader,
+          fragmentShader,
+          uniforms
+        });
+      
+        const bgMaterial = new THREE.ShaderMaterial({
+          fragmentShader,
+          uniforms
+        });
+      
+        material.side = THREE.BackSide;
+      
+        function makeInstance(geometry, x) {
+          const threeDObject = new THREE.Mesh(geometry, material);
+          scene.add(threeDObject);
+      
+          threeDObject.position.x = x;
+      
+          return threeDObject;
+        }
+      
+        const threeDObjects = [makeInstance(geometry, 0)];
+      
+        function resizeRendererToDisplaySize(renderer) {
+          const canvas = renderer.domElement;
+          const width = canvas.clientWidth;
+          const height = canvas.clientHeight;
+          const needResize = canvas.width !== width || canvas.height !== height;
+          if (needResize) {
+            renderer.setSize(width, height, false);
+          }
+          return needResize;
+        }
+      
+        function render(time) {
+          time *= 0.001; // convert to seconds
+      
+          if (resizeRendererToDisplaySize(renderer)) {
+            const canvas = renderer.domElement;
+            camera.aspect = canvas.clientWidth / canvas.clientHeight;
+            camera.updateProjectionMatrix();
+          }
+      
+          // threeDObjects.forEach((threeDObject, ndx) => {
+          //   const speed = 1 + ndx * 0.1;
+          //   const rot = (time * speed) / 2;
+          //   threeDObject.rotation.x = rot;
+          //   threeDObject.rotation.y = rot;
+          // });
+      
+          const canvas = renderer.domElement;
+          uniforms.iResolution.value.set(canvas.width, canvas.height, 1);
+          uniforms.iTime.value = time;
+          uniforms.iMouse.value.set(posX, posY);
+      
+          renderer.render(scene, camera);
+      
+          requestAnimationFrame(render);
+        }
+      
+        requestAnimationFrame(render);
+      }
+      
+      main();
+      
+      }
+
+
+
+      function greenBackground () {
+
+        // ANCHOR ---------------------------------------GREEN BACKGROUND -------------------------------------------------
+        // ---------------------------------------------------------------------------------------------- ANCHOR
+        
+        let posX;
+        let posY;
+        
+        let mouseDown = false;
+        
+        function main() {
+          const canvas = document.querySelector("#c");
+          // const renderer = new THREE.WebGLRenderer({ canvas });
+          renderer.autoClearColor = false;
+        
+          posX = renderer.domElement.clientWidth / 2;
+          posY = renderer.domElement.clientHeight / 2;
+        
+          const fov = 75;
+          const aspect = 2; // the canvas default
+          const near = 0.1;
+          const far = 5;
+          // const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+          camera.position.z = 2;
+        
+          const scene = new THREE.Scene();
+          const oRadius = 4;
+          const oDetail = 2;
+          const geometry = new THREE.OctahedronGeometry(oRadius, oDetail);
+          const plane = new THREE.PlaneBufferGeometry(2, 2);
+        
+          var pointOne = .1;
+        
+         
+        
+              const fragmentShader = `
+                    #include <common>
+        
+                    uniform vec3 iResolution;
+                    uniform float iTime;
+                    uniform vec4 iMouse;
+        
+                    uniform sampler2D iChannel0;
+        
+        
+                    vec2 arrangeCoords(vec2 p) {
+                        vec2 q = p.xy/iResolution.xy;
+                        vec2 r = -1.0+2.0*q;
+                      r.x *= iResolution.x/iResolution.y;
+                        return r;
+                    }
+        
+                    void mainImage( out vec4 fragColor, in vec2 fragCoord ){
+                      float speed = .1;
+                      float scale = 0.002;
+                      vec2 p = arrangeCoords(fragCoord);
+                      for(int i=1; i<10; i++){
+                          p.x+=0.3/float(i)*sin(float(i)*3.*p.y+iTime*speed)+iMouse.x/1000.;
+                          p.y+=0.3/float(i)*cos(float(i)*3.*p.x+iTime*speed)+iMouse.y/1000.;
+                      }
+                      float r=cos(p.x+p.y+1.)*.1999+.1238;                   //.9001  .1
+                      float g=sin(p.x+p.y+1.)*.1111+.92353;                   //NOTE.9001 colors   .1
+                      float b=(sin(p.x+p.y)+cos(p.x+p.y))*.109+.1321;      //.99 .9
+                      vec3 color = vec3(r,g,b);
+                      fragColor = vec4(color,1);
+                    }
+        
+                    varying vec2 vUv;
+                  void main() {
+                    mainImage(gl_FragColor, gl_FragCoord.xy);
+                  }
+              `;
+        
+              
+        
+              // ANCHOR --------------------------- OLD COLORS BELOW ----------------------------------------
+        
+              // float r=cos(p.x+p.y+1.)*.5+.1;
+              //         float g=sin(p.x+p.y+1.)*.5+.1;                   //NOTE colors for purple-ish
+              //         float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.9;
+        
+              // --------------------------------------------------------------------------------------// ANCHOR
+        
+        
+          const vertexShader = `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+                }
+                `;
+        
+          const loader = new THREE.TextureLoader();
+          const texture = loader.load(
+            "https://threejsfundamentals.org/threejs/resources/images/bayer.png"
+          );
+          texture.minFilter = THREE.NearestFilter;
+          texture.magFilter = THREE.NearestFilter;
+          texture.wrapS = THREE.RepeatWrapping;
+          texture.wrapT = THREE.RepeatWrapping;
+        
+          // canvas.addEventListener("mousedown", (e) => {
+          //   mouseDown = true;
+          // });
+        
+          // canvas.addEventListener("mouseup", (e) => {
+          //   mouseDown = false;
+          // });
+        
+          // canvas.addEventListener("mousemove", (e) => {
+          //   if (mouseDown) {
+          //     posX = e.layerX;
+          //     posY = e.layerY;
+          //   }
+          //   console.log(posX, posY);
+          // });
+        
+          const uniforms = {
+            iTime: { value: 0 },
+            iResolution: { value: new THREE.Vector3() },
+            iMouse: { value: new THREE.Vector2() }
+          };
+          const material = new THREE.ShaderMaterial({
+            vertexShader,
+            fragmentShader,
+            uniforms
+          });
+        
+          const bgMaterial = new THREE.ShaderMaterial({
+            fragmentShader,
+            uniforms
+          });
+        
+          material.side = THREE.BackSide;
+        
+          function makeInstance(geometry, x) {
+            const threeDObject = new THREE.Mesh(geometry, material);
+            scene.add(threeDObject);
+        
+            threeDObject.position.x = x;
+        
+            return threeDObject;
+          }
+        
+          const threeDObjects = [makeInstance(geometry, 0)];
+        
+          function resizeRendererToDisplaySize(renderer) {
+            const canvas = renderer.domElement;
+            const width = canvas.clientWidth;
+            const height = canvas.clientHeight;
+            const needResize = canvas.width !== width || canvas.height !== height;
+            if (needResize) {
+              renderer.setSize(width, height, false);
+            }
+            return needResize;
+          }
+        
+          function render(time) {
+            time *= 0.001; // convert to seconds
+        
+            if (resizeRendererToDisplaySize(renderer)) {
+              const canvas = renderer.domElement;
+              camera.aspect = canvas.clientWidth / canvas.clientHeight;
+              camera.updateProjectionMatrix();
+            }
+        
+            // threeDObjects.forEach((threeDObject, ndx) => {
+            //   const speed = 1 + ndx * 0.1;
+            //   const rot = (time * speed) / 2;
+            //   threeDObject.rotation.x = rot;
+            //   threeDObject.rotation.y = rot;
+            // });
+        
+            const canvas = renderer.domElement;
+            uniforms.iResolution.value.set(canvas.width, canvas.height, 1);
+            uniforms.iTime.value = time;
+            uniforms.iMouse.value.set(posX, posY);
+        
+            renderer.render(scene, camera);
+        
+            requestAnimationFrame(render);
+          }
+        
+          requestAnimationFrame(render);
+        }
+        
+        main();
+        
+        }
+
+
+
+
+
+
+
+
+
+purpleBackground ();
+
 
 
 
