@@ -184,7 +184,7 @@ const sceneMesh = new THREE.Mesh(sceneGeometry, sceneMaterial)
 sceneMesh.position.z -= 40
 sceneMesh.position.x -= 200
 
-scene.add(sceneMesh)
+// scene.add(sceneMesh)
 
 
 // ANCHOR -------------------------------- ADDING THE PLANE -----------------------------
@@ -205,7 +205,7 @@ vertexColors: true})
 
 const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial)
 
-planeMesh.position.y -= (visibleHeightAtZDepth(true, camera) - .8 * visibleHeightAtZDepth(true, camera)) 
+planeMesh.position.y -= (visibleHeightAtZDepth(true, camera) - .77 * visibleHeightAtZDepth(true, camera)) 
 planeMesh.rotateX(-7.5)
 
 scene.add(planeMesh)
@@ -398,9 +398,8 @@ aboutMe.style.visibility = "hidden"
 const button = document.getElementById("myBtn")
 button.addEventListener("click", (event) => {
  
-      camera.position.x -= 200
       mPT.style.visibility = "hidden"
-      aboutMe.style.visibility = "visible"
+      // aboutMe.style.visibility = "visible"
 
 
       document.getElementById("myBtn").classList.add("bg-black")
@@ -414,7 +413,7 @@ button.addEventListener("click", (event) => {
 const button2 = document.getElementById("myBtn2")
 button2.addEventListener("click", (event) => {
  
-      camera.position.x += 10
+    workPage();
     
 });
 
@@ -423,13 +422,15 @@ button3.addEventListener("click", (event) => {
  
   mPT.style.visibility = "visible"
   aboutMe.style.visibility = "hidden"
-      camera.position.x += 200
+      homePage();
       
       document.getElementById("myBtn").classList.remove("bg-black")
       document.getElementById("myBtn2").classList.remove("bg-black")
       document.getElementById("myBtn3").classList.remove("bg-black")
       document.getElementById("myBtn4").classList.removed("bg-black")
       document.getElementById("myBtn5").classList.remove("bg-black")
+
+      
     
 });
 
@@ -437,6 +438,24 @@ button3.addEventListener("click", (event) => {
 
 
 
+// ANCHOR ----------------------------- RAYCASTER COLOR CHANGE FUNCTIONS --------------------------------
+// ---------------------------------------------------------------------------------------------- ANCHOR
+
+var rColor = 0.93921568627;
+var gColor = 0.2;
+var bColor = 0.67843137254;
+
+function homePage () {
+  rColor = 0.93921568627;
+  gColor = 0.2;
+  bColor = 0.67843137254;
+}
+
+function workPage () {
+  rColor = 255/255;
+  gColor = 152/255;
+  bColor = 115/225;
+}
 
 
 
@@ -453,9 +472,7 @@ button3.addEventListener("click", (event) => {
 
 
 
-
-
-
+function background () {
 
 // ANCHOR --------------------------------------- BACKGROUND -------------------------------------------------
 // ---------------------------------------------------------------------------------------------- ANCHOR
@@ -486,7 +503,47 @@ function main() {
   const geometry = new THREE.OctahedronGeometry(oRadius, oDetail);
   const plane = new THREE.PlaneBufferGeometry(2, 2);
 
-  const fragmentShader = `
+  var pointOne = .1;
+
+  // const fragmentShader = `
+  //           #include <common>
+
+  //           uniform vec3 iResolution;
+  //           uniform float iTime;
+  //           uniform vec4 iMouse;
+
+  //           uniform sampler2D iChannel0;
+
+
+  //           vec2 arrangeCoords(vec2 p) {
+  //               vec2 q = p.xy/iResolution.xy;
+  //               vec2 r = -1.0+2.0*q;
+  //             r.x *= iResolution.x/iResolution.y;
+  //               return r;
+  //           }
+
+  //           void mainImage( out vec4 fragColor, in vec2 fragCoord ){
+  //             float speed = .1;
+  //             float scale = 0.002;
+  //             vec2 p = arrangeCoords(fragCoord);
+  //             for(int i=1; i<10; i++){
+  //                 p.x+=0.3/float(i)*sin(float(i)*3.*p.y+iTime*speed)+iMouse.x/1000.;
+  //                 p.y+=0.3/float(i)*cos(float(i)*3.*p.x+iTime*speed)+iMouse.y/1000.;
+  //             }
+  //             float r=cos(p.x+p.y+1.)*.5+.9001;                   //.9001  .1
+  //             float g=sin(p.x+p.y+1.)*.5+.9001;                   //NOTE.9001 colors   .1
+  //             float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.99;      //.99 .9
+  //             vec3 color = vec3(r,g,b);
+  //             fragColor = vec4(color,1);
+  //           }
+
+  //           varying vec2 vUv;
+  //         void main() {
+  //           mainImage(gl_FragColor, gl_FragCoord.xy);
+  //         }
+  //     `;
+
+      const fragmentShader = `
             #include <common>
 
             uniform vec3 iResolution;
@@ -511,9 +568,9 @@ function main() {
                   p.x+=0.3/float(i)*sin(float(i)*3.*p.y+iTime*speed)+iMouse.x/1000.;
                   p.y+=0.3/float(i)*cos(float(i)*3.*p.x+iTime*speed)+iMouse.y/1000.;
               }
-              float r=cos(p.x+p.y+1.)*.5+.1;
-              float g=sin(p.x+p.y+1.)*.5+.1;                   //NOTE colors
-              float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.9;
+              float r=cos(p.x+p.y+1.)*.5+.9001;                   //.9001  .1
+              float g=sin(p.x+p.y+1.)*.5+.9001;                   //NOTE.9001 colors   .1
+              float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.99;      //.99 .9
               vec3 color = vec3(r,g,b);
               fragColor = vec4(color,1);
             }
@@ -523,6 +580,8 @@ function main() {
             mainImage(gl_FragColor, gl_FragCoord.xy);
           }
       `;
+
+      
 
       // ANCHOR --------------------------- OLD COLORS BELOW ----------------------------------------
 
@@ -637,11 +696,248 @@ function main() {
 
 main();
 
+}
 
 
 
 
 
+
+function background2 () {
+
+  // ANCHOR --------------------------------------- BACKGROUND -------------------------------------------------
+  // ---------------------------------------------------------------------------------------------- ANCHOR
+  
+  let posX;
+  let posY;
+  
+  let mouseDown = false;
+  
+  function main() {
+    const canvas = document.querySelector("#c");
+    // const renderer = new THREE.WebGLRenderer({ canvas });
+    renderer.autoClearColor = false;
+  
+    posX = renderer.domElement.clientWidth / 2;
+    posY = renderer.domElement.clientHeight / 2;
+  
+    const fov = 75;
+    const aspect = 2; // the canvas default
+    const near = 0.1;
+    const far = 5;
+    // const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+    camera.position.z = 2;
+  
+    const scene = new THREE.Scene();
+    const oRadius = 4;
+    const oDetail = 2;
+    const geometry = new THREE.OctahedronGeometry(oRadius, oDetail);
+    const plane = new THREE.PlaneBufferGeometry(2, 2);
+  
+    var pointOne = .1;
+  
+    // const fragmentShader = `
+    //           #include <common>
+  
+    //           uniform vec3 iResolution;
+    //           uniform float iTime;
+    //           uniform vec4 iMouse;
+  
+    //           uniform sampler2D iChannel0;
+  
+  
+    //           vec2 arrangeCoords(vec2 p) {
+    //               vec2 q = p.xy/iResolution.xy;
+    //               vec2 r = -1.0+2.0*q;
+    //             r.x *= iResolution.x/iResolution.y;
+    //               return r;
+    //           }
+  
+    //           void mainImage( out vec4 fragColor, in vec2 fragCoord ){
+    //             float speed = .1;
+    //             float scale = 0.002;
+    //             vec2 p = arrangeCoords(fragCoord);
+    //             for(int i=1; i<10; i++){
+    //                 p.x+=0.3/float(i)*sin(float(i)*3.*p.y+iTime*speed)+iMouse.x/1000.;
+    //                 p.y+=0.3/float(i)*cos(float(i)*3.*p.x+iTime*speed)+iMouse.y/1000.;
+    //             }
+    //             float r=cos(p.x+p.y+1.)*.5+.9001;                   //.9001  .1
+    //             float g=sin(p.x+p.y+1.)*.5+.9001;                   //NOTE.9001 colors   .1
+    //             float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.99;      //.99 .9
+    //             vec3 color = vec3(r,g,b);
+    //             fragColor = vec4(color,1);
+    //           }
+  
+    //           varying vec2 vUv;
+    //         void main() {
+    //           mainImage(gl_FragColor, gl_FragCoord.xy);
+    //         }
+    //     `;
+  
+        const fragmentShader = `
+              #include <common>
+  
+              uniform vec3 iResolution;
+              uniform float iTime;
+              uniform vec4 iMouse;
+  
+              uniform sampler2D iChannel0;
+  
+  
+              vec2 arrangeCoords(vec2 p) {
+                  vec2 q = p.xy/iResolution.xy;
+                  vec2 r = -1.0+2.0*q;
+                r.x *= iResolution.x/iResolution.y;
+                  return r;
+              }
+  
+              void mainImage( out vec4 fragColor, in vec2 fragCoord ){
+                float speed = .1;
+                float scale = 0.002;
+                vec2 p = arrangeCoords(fragCoord);
+                for(int i=1; i<10; i++){
+                    p.x+=0.3/float(i)*sin(float(i)*3.*p.y+iTime*speed)+iMouse.x/1000.;
+                    p.y+=0.3/float(i)*cos(float(i)*3.*p.x+iTime*speed)+iMouse.y/1000.;
+                }
+                float r=cos(p.x+p.y+1.)*.5+.1;                   //.9001  .1
+                float g=sin(p.x+p.y+1.)*.5+.1;                   //NOTE.9001 colors   .1
+                float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.9;      //.99 .9
+                vec3 color = vec3(r,g,b);
+                fragColor = vec4(color,1);
+              }
+  
+              varying vec2 vUv;
+            void main() {
+              mainImage(gl_FragColor, gl_FragCoord.xy);
+            }
+        `;
+  
+        
+  
+        // ANCHOR --------------------------- OLD COLORS BELOW ----------------------------------------
+  
+        // float r=cos(p.x+p.y+1.)*.5+.1;
+        //         float g=sin(p.x+p.y+1.)*.5+.1;                   //NOTE colors for purple-ish
+        //         float b=(sin(p.x+p.y)+cos(p.x+p.y))*.5+.9;
+  
+        // --------------------------------------------------------------------------------------// ANCHOR
+  
+  
+    const vertexShader = `
+          varying vec2 vUv;
+          void main() {
+              vUv = uv;
+              gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+          }
+          `;
+  
+    const loader = new THREE.TextureLoader();
+    const texture = loader.load(
+      "https://threejsfundamentals.org/threejs/resources/images/bayer.png"
+    );
+    texture.minFilter = THREE.NearestFilter;
+    texture.magFilter = THREE.NearestFilter;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+  
+    // canvas.addEventListener("mousedown", (e) => {
+    //   mouseDown = true;
+    // });
+  
+    // canvas.addEventListener("mouseup", (e) => {
+    //   mouseDown = false;
+    // });
+  
+    // canvas.addEventListener("mousemove", (e) => {
+    //   if (mouseDown) {
+    //     posX = e.layerX;
+    //     posY = e.layerY;
+    //   }
+    //   console.log(posX, posY);
+    // });
+  
+    const uniforms = {
+      iTime: { value: 0 },
+      iResolution: { value: new THREE.Vector3() },
+      iMouse: { value: new THREE.Vector2() }
+    };
+    const material = new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms
+    });
+  
+    const bgMaterial = new THREE.ShaderMaterial({
+      fragmentShader,
+      uniforms
+    });
+  
+    material.side = THREE.BackSide;
+  
+    function makeInstance(geometry, x) {
+      const threeDObject = new THREE.Mesh(geometry, material);
+      scene.add(threeDObject);
+  
+      threeDObject.position.x = x;
+  
+      return threeDObject;
+    }
+  
+    const threeDObjects = [makeInstance(geometry, 0)];
+  
+    function resizeRendererToDisplaySize(renderer) {
+      const canvas = renderer.domElement;
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      const needResize = canvas.width !== width || canvas.height !== height;
+      if (needResize) {
+        renderer.setSize(width, height, false);
+      }
+      return needResize;
+    }
+  
+    function render(time) {
+      time *= 0.001; // convert to seconds
+  
+      if (resizeRendererToDisplaySize(renderer)) {
+        const canvas = renderer.domElement;
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        camera.updateProjectionMatrix();
+      }
+  
+      // threeDObjects.forEach((threeDObject, ndx) => {
+      //   const speed = 1 + ndx * 0.1;
+      //   const rot = (time * speed) / 2;
+      //   threeDObject.rotation.x = rot;
+      //   threeDObject.rotation.y = rot;
+      // });
+  
+      const canvas = renderer.domElement;
+      uniforms.iResolution.value.set(canvas.width, canvas.height, 1);
+      uniforms.iTime.value = time;
+      uniforms.iMouse.value.set(posX, posY);
+  
+      renderer.render(scene, camera);
+  
+      requestAnimationFrame(render);
+    }
+  
+    requestAnimationFrame(render);
+  }
+  
+  main();
+  
+  }
+
+
+
+
+
+
+
+
+background ();
+background2 ();
 
 
 
@@ -795,7 +1091,7 @@ frame += 0.01
 // mesh.rotation.y += 0.01
 
 
-// NOTE --- MOVING EFFECT ----------
+// NOTE --- MOVING EFFECT  -----------------------------------------  FOR MAIN BOX ----------
 
 const { array, originalPosition, randomValues } = planeMesh.geometry.attributes.position
 
@@ -803,7 +1099,7 @@ for (let i = 0; i < array.length; i += 3) {
   
   array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.009
 
-  array[i + 1] = originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.003
+  array[i + 1] = originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.006
 }
 
 planeMesh.geometry.attributes.position.needsUpdate = true
@@ -826,9 +1122,12 @@ const initialColor = { // NOTE color of the change effect
  }
 
  const hoverColor = { //NOTE color of the light
-   r: 0.93921568627,
-   g: 0.2,
-   b: 0.67843137254
+   r: rColor,
+   g: gColor,
+   b: bColor
+  //  r: 0.93921568627,
+  //  g: 0.2,
+  //  b: 0.67843137254
  }
 
 if (intersects.length > 0) {
