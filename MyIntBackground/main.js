@@ -421,7 +421,7 @@ button2.addEventListener("click", (event) => {
     workContainer.style.visibility = "hidden"
 
     // purpleBackground()
-    // animate() -da
+    // animate() -daa
     
     camera.position.z = -12
     planeMesh.position.z = -16
