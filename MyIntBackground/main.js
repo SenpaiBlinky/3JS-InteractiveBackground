@@ -272,24 +272,24 @@ scene.add(lightB)
 // ANCHOR --------------------------------- DOGGO 3D --------------------------------------------------------
 // ------------------------------------------------------------------------------------------------ ANCHOR
 
-// const loader = new GLTFLoader();
+const loader = new GLTFLoader();
 
-// loader.load( 'scene.gltf', function ( gltf ) {
+loader.load( 'scene.gltf', function ( gltf ) {
 
-// scene.add( gltf.scene );
+scene.add( gltf.scene );
 
-// gltf.scene.position.x -= 18
-// gltf.scene.position.y -= 10.3
-// gltf.scene.position.z = -30
-// gltf.scene.rotateY(-50)
-// gltf.scene.scale.set(.1,.1,.1)
+gltf.scene.position.x -= 18
+gltf.scene.position.y -= 10.3
+gltf.scene.position.z = -30
+gltf.scene.rotateY(-50)
+gltf.scene.scale.set(1,1,1)
 
 
-// }, undefined, function ( error ) {
+}, undefined, function ( error ) {
 
-// 	console.error( error );
+	console.error( error );
 
-// } );
+} );
 
 
 
@@ -394,8 +394,15 @@ for (const [name, object] of Object.entries(cubes)) {
 const mainPageText = document.getElementById("mainPageText")
 const aboutMe = document.getElementById("aboutMe")
 aboutMe.style.visibility = "hidden"
-const workContainer = document.getElementById("workContainer")
-workContainer.style.visibility = "hidden"
+
+const workPage = document.getElementById("workPage")
+workPage.style.visibility = "hidden"
+
+const workTitle = document.getElementById("workTitle")
+workTitle.style.visibility = "hidden"
+
+const aboutMeTitle = document.getElementById("aboutMeTitle")
+aboutMeTitle.style.visibility = "hidden"
 
 const button = document.getElementById("myBtn1")
 button.addEventListener("click", (event) => {
@@ -403,7 +410,9 @@ button.addEventListener("click", (event) => {
     orangePage();
  
     mainPageText.style.visibility = "hidden"
-    workContainer.style.visibility = "visible"
+    workPage.style.visibility = "hidden"
+    aboutMeTitle.style.visibility = "visible"
+    workTitle.style.visibility = "hidden"
       // orangeBackground()
       // animate()
       // renderer.render(scene, camera)
@@ -418,7 +427,9 @@ button2.addEventListener("click", (event) => {
  
     purplePage();
     mainPageText.style.visibility = "visible"
-    workContainer.style.visibility = "hidden"
+    workPage.style.visibility = "hidden"
+    aboutMeTitle.style.visibility = "hidden"
+    workTitle.style.visibility = "hidden"
 
     // purpleBackground()
     // animate() /daa
@@ -434,6 +445,9 @@ button3.addEventListener("click", (event) => {
   // aboutMe.style.visibility = "hidden"
       bluePage();
       mainPageText.style.visibility = "hidden"
+      workPage.style.visibility = "visible"
+      aboutMeTitle.style.visibility = "hidden"
+      workTitle.style.visibility = "visible"
       
       // blueBackground();
 
