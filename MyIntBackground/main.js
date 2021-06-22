@@ -278,9 +278,9 @@ loader.load( 'scene.gltf', function ( gltf ) {
 
 scene.add( gltf.scene );
 
-gltf.scene.position.x -= 18
-gltf.scene.position.y -= 10.3
-gltf.scene.position.z = -30
+gltf.scene.position.x += 5 
+gltf.scene.position.y -= 2.3
+gltf.scene.position.z = -1118
 gltf.scene.rotateY(-50)
 gltf.scene.scale.set(1,1,1)
 
@@ -290,6 +290,10 @@ gltf.scene.scale.set(1,1,1)
 	console.error( error );
 
 } );
+
+const lightC = new THREE.DirectionalLight(0xffffff, 1)
+lightC.position.set(4, 4, -1120)
+scene.add(lightC)
 
 
 
@@ -417,8 +421,8 @@ button.addEventListener("click", (event) => {
       // animate()
       // renderer.render(scene, camera)
       // planeMesh.geometry.attributes.position.needsUpdate = true
-      camera.position.z = -14
-      planeMesh.position.z = -18
+      camera.position.z = -1114
+      planeMesh.position.z = -1118
 
 }); 
 
@@ -545,7 +549,7 @@ function main() {
   // const geometry = new THREE.OctahedronGeometry(oRadius, oDetail);
   // const plane = new THREE.PlaneBufferGeometry(2, 2);
   
-  scene.position.z = -8;
+  scene.position.z = -1108;
 
       const fragmentShader = `
             #include <common>
