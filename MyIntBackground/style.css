@@ -194,9 +194,9 @@ body {
   overflow: hidden;
   transition: 0.5s;
 }
-
+/* da */
 .container .box:hover {
-  z-index: 2;
+  z-index: 2; 
   transform: scale(1.25);
   box-shadow: 0 25px 40px rgba(0, 0, 0, .5);
 }
