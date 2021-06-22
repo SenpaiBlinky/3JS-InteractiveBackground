@@ -194,7 +194,6 @@ body {
   overflow: hidden;
   transition: 0.5s;
 }
-/* da */
 .container .box:hover {
   z-index: 2; 
   transform: scale(1.25);
