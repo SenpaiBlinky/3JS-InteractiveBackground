@@ -218,7 +218,7 @@ body {
   height: 100%;
   z-index: 1;
   opacity: .7;
-  background: linear-gradient(180deg,rgb(5, 29, 138),#000);
+  background: linear-gradient(180deg,rgb(32, 34, 41),#000);
   mix-blend-mode: multiply;
   transition: 0.1s;
 }
@@ -308,3 +308,4 @@ body {
   font-size: 10vw;
   text-align: center;
 }
+
