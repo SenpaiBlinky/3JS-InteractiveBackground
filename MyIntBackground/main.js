@@ -272,28 +272,28 @@ scene.add(lightB)
 // ANCHOR --------------------------------- DOGGO 3D --------------------------------------------------------
 // ------------------------------------------------------------------------------------------------ ANCHOR
 
-const loader = new GLTFLoader();
+// const loader = new GLTFLoader();
 
-loader.load( 'scene.gltf', function ( gltf ) {
+// loader.load( 'scene.gltf', function ( gltf ) { da
 
-scene.add( gltf.scene );
+// scene.add( gltf.scene );
 
-gltf.scene.position.x += 5 
-gltf.scene.position.y -= 2.3
-gltf.scene.position.z = -1118
-gltf.scene.rotateY(-50)
-gltf.scene.scale.set(1,1,1)
+// gltf.scene.position.x += 5 
+// gltf.scene.position.y -= 2.3
+// gltf.scene.position.z = -1118
+// gltf.scene.rotateY(-50)
+// gltf.scene.scale.set(1,1,1)
 
 
-}, undefined, function ( error ) {
+// }, undefined, function ( error ) {
 
-	console.error( error );
+// 	console.error( error );
 
-} );
+// } );
 
-const lightC = new THREE.DirectionalLight(0xffffff, 1)
-lightC.position.set(4, 4, -1120)
-scene.add(lightC)
+// const lightC = new THREE.DirectionalLight(0xffffff, 1)
+// lightC.position.set(4, 4, -1120)
+// scene.add(lightC)
 
 
 
